@@ -1,0 +1,38 @@
+.container{
+    height: -webkit-fill-available;
+    width: -webkit-fill-available;
+    font-family: 'Maven Pro', sans-serif;
+}
+
+.container-project{
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-family: 'Maven Pro', sans-serif;
+    margin-top: 80px;
+}
+
+form{
+    display: grid;
+    font-family: 'Maven Pro', sans-serif;
+}
+
+mat-form-field{
+    padding: 12px;
+}
+
+.sidenav{
+    width: 250px;
+}
+
+img {
+    width: -webkit-fill-available;
+    max-width: 100%;
+    max-height: 50%;
+    opacity: 0.8;
+}
+
+.container-links{
+    margin: 10px;
+}

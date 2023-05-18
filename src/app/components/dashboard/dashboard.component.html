@@ -3,16 +3,24 @@
     <img src="../../../assets/img/ucp-logo.png" alt="ucp logo">
     <hr>
     <div class="container-links">
+      <mat-icon aria-hidden="false" aria-label="home" fontIcon="home"></mat-icon>
+      <a routerLink="/dashboard" class="btn" role="button" data-bs-toggle="button" aria-pressed="true">
+        Inicio</a>
+    </div>
+    <div class="container-links">
       <mat-icon aria-hidden="false" aria-label="backup" fontIcon="backup"></mat-icon>
-      <a routerLink="/uploadFile" class="btn" role="button" data-bs-toggle="button" aria-pressed="true">Subir Archivo</a>
+      <a routerLink="/uploadFile" class="btn" role="button" data-bs-toggle="button" aria-pressed="true">
+        Subir Proyecto</a>
     </div>
     <div class="container-links">
       <mat-icon aria-hidden="false" aria-label="list" fontIcon="list"></mat-icon>
-      <a routerLink="/projects" class="btn" role="button" data-bs-toggle="button" aria-pressed="true">Ver Archivos</a>
+      <a routerLink="/projects" class="btn" role="button" data-bs-toggle="button" aria-pressed="true">
+        Listado de Proyectos</a>
     </div>
     <div class="container-links">
       <mat-icon aria-hidden="false" aria-label="logout" fontIcon="logout"></mat-icon>
-      <a routerLink="/login" class="btn" role="button" data-bs-toggle="button" aria-pressed="true">Cerrar Sesión</a>
+      <a routerLink="/login" class="btn" role="button" data-bs-toggle="button" aria-pressed="true">
+        Cerrar Sesión</a>
     </div>
   </mat-drawer>
 
@@ -27,5 +35,6 @@
       </h1>
     </div>
     <div class="col-8 textoDash">En CircuitProjects podrás subir el documento relacionado a tu proyecto creado para circuitos y señales</div>
+    <h1><b>Hecho por: Shaden Acevedo</b></h1>
   </div>
 </mat-drawer-container>

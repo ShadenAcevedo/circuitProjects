@@ -1,27 +1,60 @@
-<div class="container">
-  <div class="container-login">
+<mat-drawer-container class="container" autosize hasBackdrop="true">
+  <mat-drawer #drawer class="sidenav" mode="over">
     <img src="../../../assets/img/ucp-logo.png" alt="ucp logo">
-    <h2>Inicio de sesión</h2>
-    <form [formGroup]="formulario">
-      <mat-form-field appearance="outline">
-        <mat-label>Correo</mat-label>
-        <input matInput formControlName="correo">    
-        <mat-error *ngIf="formulario.controls['correo'].hasError('required')">El correo es requerido</mat-error>
-        <mat-error *ngIf="formulario.controls['correo'].hasError('email')">El correo no es válido</mat-error>     
-      </mat-form-field>
-      <mat-form-field appearance="outline">
-        <mat-label>Contraseña</mat-label>
-        <input matInput formControlName="contrasena" [type]="hide ? 'password' : 'text'">
-        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-        </button>
-        <mat-error *ngIf="formulario.controls['contrasena'].hasError('required')">La contraseña es requerida</mat-error>
-        <mat-error *ngIf="formulario.controls['contrasena'].hasError('minlength')">La contraseña debe tener mínimo 5 caracteres</mat-error>
-        <mat-error *ngIf="formulario.controls['contrasena'].hasError('maxLength')">La contraseña NO debe pasar de 10 caracteres</mat-error>
-      </mat-form-field>
-    
-    </form>
-    <button type="button" class="btn btn-success mt-2" (click)="login()">Iniciar Sesión</button>
-  </div>
-</div>
+    <hr>
+    <div class="container-links">
+      <mat-icon aria-hidden="false" aria-label="home" fontIcon="home"></mat-icon>
+      <a routerLink="/dashboard" class="btn" role="button" data-bs-toggle="button" aria-pressed="true">
+        Inicio</a>
+    </div>
+    <div class="container-links">
+      <mat-icon aria-hidden="false" aria-label="backup" fontIcon="backup"></mat-icon>
+      <a routerLink="/uploadFile" class="btn" role="button" data-bs-toggle="button" aria-pressed="true">
+        Subir Proyecto</a>
+    </div>
+    <div class="container-links">
+      <mat-icon aria-hidden="false" aria-label="list" fontIcon="list"></mat-icon>
+      <a routerLink="/projects" class="btn" role="button" data-bs-toggle="button" aria-pressed="true">
+        Listado de Proyectos</a>
+    </div>
+    <div class="container-links">
+      <mat-icon aria-hidden="false" aria-label="logout" fontIcon="logout"></mat-icon>
+      <a routerLink="/login" class="btn" role="button" data-bs-toggle="button" aria-pressed="true">
+        Cerrar Sesión</a>
+    </div>
+  </mat-drawer>
 
+  <div class="sidenav-content">
+    <button type="button" mat-button (click)="drawer.toggle()">
+      <mat-icon aria-hidden="false" aria-label="menu" fontIcon="menu"></mat-icon>
+    </button>
+    <div class="container-project">
+      <h2>Subir Proyecto</h2>
+      <form [formGroup]="project">
+        <mat-form-field appearance="outline">
+          <mat-label>Nombre del proyecto</mat-label>
+          <input matInput formControlName="nameProject">
+          <mat-error *ngIf="project.controls['nameProject'].hasError('required')">El nombre del proyecto es
+            requerido</mat-error>
+        </mat-form-field>
+
+        <div>
+          <input class="file-input" formControlName="fileProject" type="file">
+        </div>
+
+        <mat-form-field>
+          <mat-label>Estado</mat-label>
+          <mat-select formControlName="estado" required>
+            <mat-option>--</mat-option>
+            <mat-option *ngFor="let estado of estados" [value]="estado.name">
+              {{estado.name}}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="project.controls['estado'].hasError('required')">El estado es requerido</mat-error>
+        </mat-form-field>
+      </form>
+      <button type="button" class="btn btn-success mt-2" (click)="create()">Registrar Proyecto</button>
+    </div>
+
+  </div>
+</mat-drawer-container>
