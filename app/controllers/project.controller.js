@@ -1,4 +1,4 @@
-const Pregunta = require('../models/project.model');
+const Project = require('../models/project.model');
 
 exports.create = (req, res) => {
     var body = req.body;
@@ -10,77 +10,47 @@ exports.create = (req, res) => {
         });
     }
 
-
-    // Crear una nueva encuesta
-    const pregunta = new Pregunta({
-        pregunta: body.pregunta,
-        tipo: body.tipo,
-        Encuesta_id_Encuesta: body.id_Encuesta
+    // Crear un nuevo proyecto
+    const project = new Project({
+        nameProject: body.nameProject,
+        fileProject: body.fileProject,
+        estado: body.estado
     })
 
-
-    // Guardar pregunta en la base de datos
-    Pregunta.create(pregunta, (err, data) => {
+    // Guardar proyecto en la base de datos
+    Project.create(project, (err) => {
         if (err) {
             return res.status(400).json({
                 ok: false,
-                mensaje: "El id de la encuesta no existe",
+                mensaje: "El id del proyecto no existe",
                 errors: err
             });
         } else {
             res.status(201).json({
                 ok: true,
-                pregunta: pregunta
+                project: project
             });
         }
     });
-
-
 }
 
-
-
-
-
-exports.findOne = (req, res) => {
-    const id_Encuesta = req.params.id_Encuesta;
-    Pregunta.finByIdEncuesta(id_Encuesta, (err, response) => {
+exports.findProjects = (req, res) => {
+    Project.findProjects((err, projects) => {
         if (err) {
             if (err.kind === 'No_Encontrado') {
                 return res.status(404).json({
                     ok: false,
-                    mensaje: `preguntas no encontradas con el id de esa encuesta: ${id_Encuesta}.`,
+                    mensaje: `proyectos no encontrados.`,
                     errors: err
                 });
             } else {
                 return res.status(500).json({
                     ok: false,
-                    mensaje: "Error al retornar preguntas con el id_Encuesta con el id" + id_Encuesta,
-                    errors: { message: 'Error al recuperar preguntas de la base de datos' }
+                    mensaje: "Error al retornar proyectos",
+                    errors: { message: 'Error al recuperar proyectos de la base de datos' }
                 });
             }
         }
-        res.status(200).json(Object.assign({ ok: true, response }));
-    });
-}
-
-exports.findPreguntas = (req, res) => {
-    Pregunta.findPregunta((err, preguntas) => {
-        if (err) {
-            if (err.kind === 'No_Encontrado') {
-                return res.status(404).json({
-                    ok: false,
-                    mensaje: `preguntas no encontradas.`,
-                    errors: err
-                });
-            } else {
-                return res.status(500).json({
-                    ok: false,
-                    mensaje: "Error al retornar preguntas",
-                    errors: { message: 'Error al recuperar preguntas de la base de datos' }
-                });
-            }
-        }
-        res.status(200).json(Object.assign({ ok: true, preguntas }));
+        res.status(200).json(Object.assign({ ok: true, projects }));
     });
 }

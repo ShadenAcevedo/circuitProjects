@@ -1,53 +1,33 @@
 const sql = require('./db');
 
-
 // Constructor
-const Pregunta = function(project) {
-    this.pregunta = project.nameProject;
-    this.id_Encuesta = project.idUser;
+const Project = function(project) {
+    this.nameProject = project.nameProject;
+    this.fileProject = project.fileProject;
+    this.estado = project.estado;
 }
 
-
-Pregunta.create = (preguntaNueva, result) => {
-    sql.query('INSERT INTO Pregunta SET ?', preguntaNueva, (err, res) => {
+Project.create = (proyectoNuevo, result) => {
+    sql.query('INSERT INTO project SET ?', proyectoNuevo, (err, res) => {
         if (err) {
             console.log("error", err);
             result(err, null);
             return;
         }
-        console.log("Pregunta creada: ", { id_Pregunta: res.insertId, ...preguntaNueva });
-        result(null, { id_Pregunta: res.insertId, ...preguntaNueva });
+        console.log("Proyecto creado: ", { idProject: res.insertId, ...proyectoNuevo });
+        result(null, { idProject: res.insertId, ...proyectoNuevo });
     });
 }
 
-
-Pregunta.finByIdEncuesta = (id_Encuesta, result) => {
-    sql.query("SELECT * FROM Pregunta  WHERE id_Encuesta = ?", [id_Encuesta], (err, res) => {
+Project.findProjects = (result) => {
+    sql.query("SELECT * FROM project", (err, res) => {
         if (err) {
             console.log('Error', err);
             result(null, err);
             return;
         }
         if (res.length) {
-            console.log('Preguntas encontradas', res);
-            result(null, res);
-            return;
-        }
-        // Encuesta no encontrada con el id
-        result({ kind: 'No_Encontrado' }, null);
-    });
-}
-
-
-Pregunta.findPregunta = (result) => {
-    sql.query("SELECT * FROM Pregunta", (err, res) => {
-        if (err) {
-            console.log('Error', err);
-            result(null, err);
-            return;
-        }
-        if (res.length) {
-            console.log('Preguntas encontradas', res);
+            console.log('Proyectos encontrados', res);
             result(null, res);
             return;
         }
@@ -55,5 +35,4 @@ Pregunta.findPregunta = (result) => {
     });
 }
 
-
-module.exports = Pregunta;
+module.exports = Project;

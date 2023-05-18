@@ -1,136 +1,46 @@
-const Usuario = require("../models/user.model");
+const User = require("../models/user.model");
+const bcrypt = require("bcryptjs");
 
+// =========================================================
+// Autenticar
+// =========================================================
+module.exports.auth = async function auth(req, res) {
 
-// =======================================
-// Actualizar un usuario identificado por el usuarioId en la soliditud
-// =======================================
-// exports.update = (req, res) => {
-//     // Validate Request
-//     if (!req.body) {
-//         res.status(400).send({
-//             mensaje: "No lo puede dejar vacio!"
-//         });
-//     }
+    // Validar solicitud
+    if (!req.body) {
+        return res.status(400).send({
+            mensaje: "El contenido no puede estar vacio"
+        });
+    }
 
-//     Usuario.updateById(
-//         req.params.usuarioId,
-//         new Usuario(req.body),
-//         (err, usuarioGUardado) => {
-//             if (err) {
-//                 if (err.kind === "No_Encontrado") {
-//                     return res.status(400).send({
-//                         ok: false,
-//                         mensaje: `Usuario no encontrado con el id: ${req.params.usuarioId}.`,
-//                         errors: { message: 'No existe un usuario con ese Id' }
-//                     });
-//                 } else {
-//                     return res.status(500).send({
-//                         ok: false,
-//                         message: "Error al retornar usuario con el id: " + req.params.usuarioId,
-//                         errors: err
-//                     });
-//                 }
-//             }
+    const userDB = await User.getByEmail(req.body.emailUser)
+    if (userDB === undefined) {
+        // Crear un nuevo usuario
+        const user = new User({
+            emailUser: req.body.emailUser,
+            passUser: bcrypt.hashSync(req.body.passUser, 10)
+        });
 
-//             res.status(200).json({
-//                 ok: true,
-//                 usuario: usuarioGUardado
-//             });
-
-//         }
-//     );
-// };
-
-
-
-
-
-
-
-
-// =======================================
-// Eliminar un un usuario con usuarioId identificado en la solicitud
-// =======================================
-// exports.delete = (req, res) => {
-//     Usuario.remove(req.params.usuarioId, (err, usuarioBorrado) => {
-//         if (err) {
-//             if (err.kind === "No_Encontrado") {
-//                 return res.status(400).json({
-//                     ok: false,
-//                     mensaje: `Usuario no encontrado con id ${req.params.usuarioId}`,
-//                     errors: { message: 'No existe un usuario con ese ID' }
-//                 });
-//             } else {
-//                 return res.status(500).json({
-//                     ok: false,
-//                     mensaje: "Error al borrar usuario",
-//                     errors: err
-//                 });
-//             }
-//         } else {
-//             res.status(200).json({
-//                 ok: true,
-//                 mensaje: `El usuario fue eliminado exitosamente`,
-//             });
-//         }
-//     });
-// };
-
-
-
-
-// ==============================================
-// Encuentra un solo usuario con un id de usuario
-// ==============================================
-exports.findOne = (req, res) => {
-    Usuario.findById(req.params.usuarioId, (err, usuarioDb) => {
-        if (err) {
-            if (err.kind === "No_Encontrado") {
-                return res.status(404).json({
+        // Guardar usuario en la base de datos
+        User.create(user, (err) => {
+            if (err) {
+                return res.status(400).json({
                     ok: false,
-                    mensaje: `Usuario no encontrado con id: ${req.params.usuarioId}.`,
+                    mensaje: "El correo debe ser único",
                     errors: err
                 });
             } else {
-                return res.status(500).json({
+                res.status(201).json({
                     ok: true,
-                    mensaje: "Error al recuperar usuario con id: " + req.params.usuarioId,
-                    errors: { message: "Error al recuperar usuario de la base de datos" }
+                    usuario: user
                 });
             }
-        }
-        usuarioDb.password = ":)";
-        res.status(200).json({
-            ok: true,
-            usuario: usuarioDb
         });
-    });
-};
-
-
-
-
-// ===============================================
-// Eliminar todos los usuarios de la base de datos
-// ===============================================
-// exports.deleteAll = (req, res) => {
-//     Usuario.removeAll((err, data) => {
-//         if (err) {
-//             return res.status(500).json({
-//                 mensaje: err.mensaje || "Se produjo algun error al eliminar todos los usuarios"
-//             });
-//         } else {
-//             res.send({
-//                 ok: true,
-//                 mensaje: `Todos las usuarios fueron eliminadas con éxito!`
-//             });
-//         }
-//     });
-// };
-
-
-
-
-// ====================================== 
-// Login
-// ======================================
+    } else {
+        userDB.passUser = ":)";
+        res.json({
+            ok: true,
+            usuario: userDB
+        });
+    }
+}

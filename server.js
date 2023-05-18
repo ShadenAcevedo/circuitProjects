@@ -2,7 +2,11 @@ require('dotenv').config();
 
 const conexion = require("./app/models/db");
 const express = require("express");
+const bodyParser = require("body-parser");
 const app = express();
+
+// Analizar las solicitudes de tipo de contenido: aplicación / json
+app.use(bodyParser.json());
 
 // CORS
 app.use((req, res, next) => {

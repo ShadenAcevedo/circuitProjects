@@ -10,6 +10,9 @@
     "author": "Zuliban Bolaños",
     "license": "ISC",
     "dependencies": {
+        "bcrypt": "^4.0.0",
+        "bcryptjs": "^2.4.3",
+        "body-parser": "^1.19.0",
         "dotenv": "^8.2.0",
         "enigma-code": "0.0.11",
         "express": "^4.17.1",
