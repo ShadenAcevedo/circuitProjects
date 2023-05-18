@@ -32,7 +32,7 @@ module.exports.auth = async function auth(req, res) {
             } else {
                 res.status(201).json({
                     ok: true,
-                    usuario: user
+                    user: user
                 });
             }
         });
@@ -40,7 +40,7 @@ module.exports.auth = async function auth(req, res) {
         userDB.passUser = ":)";
         res.json({
             ok: true,
-            usuario: userDB
+            user: userDB
         });
     }
 }
