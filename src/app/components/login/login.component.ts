@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { User } from '../../models/user.models';
+import { UserService } from '../../services/user.service';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 
 @Component({
@@ -11,23 +13,30 @@ export class LoginComponent implements OnInit {
 
   formulario: FormGroup;
   hide = true;
-  
-  constructor(private router: Router, private formBuilder: FormBuilder) { 
+
+  constructor(private router: Router,
+    private formBuilder: FormBuilder,
+    public userService: UserService) {
     this.formulario = this.formBuilder.group({
-      correo: new FormControl('', [Validators.required, Validators.email]),
-      contrasena: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(10)]),   
+      emailUser: new FormControl('', [Validators.required, Validators.email]),
+      passUser: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(10)]),
     });
   }
 
   ngOnInit() {
-    
+
   }
 
   login() {
     if (!this.formulario.invalid) {
-      this.router.navigate(['/dashboard']);
+      const usuario = new User(this.formulario.value.emailUser, this.formulario.value.passUser);
+      console.log(usuario);
+      
+      this.userService.login(usuario)
+        .subscribe(() => {
+          this.router.navigate(['/dashboard']);
+        });
     }
-    console.log(this.formulario.value);
   }
 
 }

@@ -2,6 +2,7 @@
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { MaterialModule } from './shared/modules/material.module';
@@ -28,6 +29,7 @@ import { PageNotFoundComponent } from './shared/pageNotFound/pageNotFound.compon
     FormsModule,
     BrowserModule,
     MaterialModule,
+    HttpClientModule,
     AppRoutingModule,
     ReactiveFormsModule,
     BrowserAnimationsModule

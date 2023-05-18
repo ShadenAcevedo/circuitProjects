@@ -1,3 +1,27 @@
-<p>
-  create works!
-</p>
+<div class="container">
+  <div class="container-login">
+    <img src="../../../assets/img/ucp-logo.png" alt="ucp logo">
+    <h2>Inicio de sesión</h2>
+    <form [formGroup]="formulario">
+      <mat-form-field appearance="outline">
+        <mat-label>Correo</mat-label>
+        <input matInput formControlName="correo">    
+        <mat-error *ngIf="formulario.controls['correo'].hasError('required')">El correo es requerido</mat-error>
+        <mat-error *ngIf="formulario.controls['correo'].hasError('email')">El correo no es válido</mat-error>     
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Contraseña</mat-label>
+        <input matInput formControlName="contrasena" [type]="hide ? 'password' : 'text'">
+        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+        <mat-error *ngIf="formulario.controls['contrasena'].hasError('required')">La contraseña es requerida</mat-error>
+        <mat-error *ngIf="formulario.controls['contrasena'].hasError('minlength')">La contraseña debe tener mínimo 5 caracteres</mat-error>
+        <mat-error *ngIf="formulario.controls['contrasena'].hasError('maxLength')">La contraseña NO debe pasar de 10 caracteres</mat-error>
+      </mat-form-field>
+    
+    </form>
+    <button type="button" class="btn btn-success mt-2" (click)="login()">Iniciar Sesión</button>
+  </div>
+</div>
+
