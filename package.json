@@ -1,0 +1,26 @@
+{
+    "name": "backend-mysql",
+    "version": "1.0.0",
+    "description": "Backend encuestas con base de datos de mysql",
+    "main": "server.js",
+    "scripts": {
+        "start": "node server.js",
+        "dev": "nodemon server.js"
+    },
+    "author": "Zuliban Bolaños",
+    "license": "ISC",
+    "dependencies": {
+        "dotenv": "^8.2.0",
+        "enigma-code": "0.0.11",
+        "express": "^4.17.1",
+        "google-auth-library": "^5.10.1",
+        "jsonwebtoken": "^8.5.1",
+        "mysql": "^2.18.1",
+        "node-url-shortener": "^1.0.1",
+        "nodemailer": "^6.4.5"
+    },
+    "devDependencies": {
+        "morgan": "^1.10.0",
+        "nodemon": "^2.0.4"
+    }
+}
