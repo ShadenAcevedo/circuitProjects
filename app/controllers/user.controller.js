@@ -4,7 +4,7 @@ const bcrypt = require("bcryptjs");
 // =========================================================
 // Autenticar
 // =========================================================
-module.exports.auth = async function auth(req, res) {
+exports.auth = async function auth(req, res) {
 
     // Validar solicitud
     if (!req.body) {
@@ -22,7 +22,7 @@ module.exports.auth = async function auth(req, res) {
         });
 
         // Guardar usuario en la base de datos
-        User.create(user, (err) => {
+        User.create(user, (err, user) => {
             if (err) {
                 return res.status(400).json({
                     ok: false,
@@ -32,7 +32,7 @@ module.exports.auth = async function auth(req, res) {
             } else {
                 res.status(201).json({
                     ok: true,
-                    user: user
+                    user
                 });
             }
         });

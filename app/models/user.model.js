@@ -13,8 +13,8 @@ User.create = (usuarioNuevo, result) => {
             result(err, null);
             return;
         }
-        console.log("Usuario creado: ", { id: res.insertId, ...usuarioNuevo });
-        result(null, { id: res.insertId, ...usuarioNuevo });
+        console.log("Usuario creado: ", { idUser: res.insertId, ...usuarioNuevo });
+        result(null, { idUser: res.insertId, ...usuarioNuevo });
     });
 };
 
