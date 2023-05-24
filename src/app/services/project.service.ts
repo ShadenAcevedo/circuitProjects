@@ -34,8 +34,8 @@ export class ProjectService {
       }));
   }
 
-  getProjects() {
-    const url = URL_SERVICIOS + '/projects';
+  getProjects(idUser:number) {
+    const url = URL_SERVICIOS + '/projects/'+ idUser;
     return this.http.get(url)
       .pipe(map((resp:any) => {
         return resp;

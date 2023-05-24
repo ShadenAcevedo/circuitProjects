@@ -2,48 +2,7 @@ import { Component, AfterViewInit, ViewChild } from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
-import { Project } from '../../models/project.models';
 import { ProjectService } from '../../services/project.service';
-
-export interface UserData {
-  id: string;
-  name: string;
-  progress: string;
-  fruit: string;
-}
-
-/** Constants used to fill up our data base. */
-const FRUITS: string[] = [
-  'blueberry',
-  'lychee',
-  'kiwi',
-  'mango',
-  'peach',
-  'lime',
-  'pomegranate',
-  'pineapple',
-];
-const NAMES: string[] = [
-  'Maia',
-  'Asher',
-  'Olivia',
-  'Atticus',
-  'Amelia',
-  'Jack',
-  'Charlotte',
-  'Theodore',
-  'Isla',
-  'Oliver',
-  'Isabella',
-  'Jasper',
-  'Cora',
-  'Levi',
-  'Violet',
-  'Arthur',
-  'Mia',
-  'Thomas',
-  'Elizabeth',
-];
 
 @Component({
   selector: 'app-projects',
@@ -62,10 +21,12 @@ export class ProjectsComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.projectService.getProjects()
+    const user =  JSON.parse(localStorage.getItem('user') || '{}');
+    console.log("user ",user);
+    
+    this.projectService.getProjects(user.idUser)
     .subscribe((resp) => {
       this.dataSource = new MatTableDataSource(resp.projects);
-      console.log(this.dataSource);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     });

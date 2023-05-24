@@ -43,10 +43,13 @@ export class UploadFileComponent implements OnInit {
         icon: 'error'
       });
     } else{
+      const user =  JSON.parse(localStorage.getItem('user') || '{}');
+    console.log("user ",user);
       const project = new Project(
         this.project.value.nameProject, 
         this.project.value.fileProject, 
-        this.project.value.estado);
+        this.project.value.estado,
+        user.idUser);
       this.projectService.createProject(project)
         .subscribe(() => {
           Swal.fire({
