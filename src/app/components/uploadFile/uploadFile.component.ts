@@ -44,7 +44,6 @@ export class UploadFileComponent implements OnInit {
       });
     } else{
       const user =  JSON.parse(localStorage.getItem('user') || '{}');
-    console.log("user ",user);
       const project = new Project(
         this.project.value.nameProject, 
         this.project.value.fileProject, 
@@ -55,7 +54,7 @@ export class UploadFileComponent implements OnInit {
           Swal.fire({
             position: 'top-end',
             icon: 'success',
-            title: 'Your work has been saved',
+            title: 'Tu proyecto ha sido guardado',
             showConfirmButton: false,
             timer: 1500
           })

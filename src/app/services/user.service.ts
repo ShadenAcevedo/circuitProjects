@@ -12,15 +12,12 @@ import { empty } from 'rxjs';
 })
 export class UserService {
 
-  user: User;
-
   constructor(public http: HttpClient, public router: Router) {
 
   }
 
   guardarStorage(user: User) {
     localStorage.setItem('user', JSON.stringify(user));
-    this.user = user;
   }
 
   logout() {

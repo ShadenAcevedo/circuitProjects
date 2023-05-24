@@ -22,8 +22,6 @@ export class ProjectsComponent implements AfterViewInit {
 
   ngAfterViewInit() {
     const user =  JSON.parse(localStorage.getItem('user') || '{}');
-    console.log("user ",user);
-    
     this.projectService.getProjects(user.idUser)
     .subscribe((resp) => {
       this.dataSource = new MatTableDataSource(resp.projects);

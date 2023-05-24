@@ -42,9 +42,9 @@ export class ProjectService {
       }), catchError((err: any) => {
         this.router.navigate(['/projects']);
         Swal.fire({
-          title: 'Error',
-          text: 'Error al traer los proyectos',
-          icon: 'error'
+          title: 'info',
+          text: err.error.mensaje,
+          icon: 'info'
         });
         return empty();
       }));
