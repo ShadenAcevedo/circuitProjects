@@ -5,6 +5,7 @@ const Project = function(project) {
     this.nameProject = project.nameProject;
     this.fileProject = project.fileProject;
     this.estado = project.estado;
+    this.idUser = project.idUser;
 }
 
 Project.create = (proyectoNuevo, result) => {
@@ -19,8 +20,8 @@ Project.create = (proyectoNuevo, result) => {
     });
 }
 
-Project.findProjects = (result) => {
-    sql.query("SELECT * FROM project", (err, res) => {
+Project.findProjects = (idUser, result) => {
+    sql.query("SELECT * FROM project WHERE idUser = ?", [idUser], (err, res) => {
         if (err) {
             console.log('Error', err);
             result(null, err);

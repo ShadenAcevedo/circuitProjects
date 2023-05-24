@@ -14,7 +14,8 @@ exports.create = (req, res) => {
     const project = new Project({
         nameProject: body.nameProject,
         fileProject: body.fileProject,
-        estado: body.estado
+        estado: body.estado,
+        idUser: body.idUser
     })
 
     // Guardar proyecto en la base de datos
@@ -35,7 +36,7 @@ exports.create = (req, res) => {
 }
 
 exports.findProjects = (req, res) => {
-    Project.findProjects((err, projects) => {
+    Project.findProjects(req.params.idUser, (err, projects) => {
         if (err) {
             if (err.kind === 'No_Encontrado') {
                 return res.status(404).json({
